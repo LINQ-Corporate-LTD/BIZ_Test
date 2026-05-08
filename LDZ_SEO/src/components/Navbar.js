@@ -357,7 +357,7 @@
 
 // code After added Google Translation
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../assets/css/navbar.css";
 import GoogleTranslate from "./GoogleTranslate";
 import { useSSRData } from "../common/useSSRData";
@@ -373,6 +373,7 @@ import leftArrowIcon from '../assets/WebCommonImages/icon-arrow-left.png'
 
 const Navbar = ({ disableScrollEffect = false, forceScrolled = false }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // ✅ Initialize navLogos from SSR window.__INITIAL_DATA__ — persists across route changes
   const [navLogos, setNavLogos] = useState(() => {
@@ -388,9 +389,13 @@ const Navbar = ({ disableScrollEffect = false, forceScrolled = false }) => {
   const ssrSponsorList = useSSRData("sponsors");
   const sponsorList = ssrSponsorList || [];
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(() =>
+    typeof window !== "undefined" ? window.scrollY > 40 : false
+  );
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [windowWidth, setWindowWidth] = useState(1200);
+  const [windowWidth, setWindowWidth] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth : 1200
+  );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
   const [activeNavItem, setActiveNavItem] = useState(null);
@@ -425,8 +430,7 @@ const Navbar = ({ disableScrollEffect = false, forceScrolled = false }) => {
 
   const less1024 = windowWidth < 1025;
   const greater1024 = windowWidth > 1024;
-  const isHomePage =
-    typeof window !== "undefined" ? window.location.pathname === "/" : false;
+  const isHomePage = location.pathname === "/";
 
   const showWhiteNavbar = isHomePage
     ? less1024

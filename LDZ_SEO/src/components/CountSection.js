@@ -59,7 +59,7 @@ const CountSection = () => {
           <div>
             <div>
               <span>
-                {inView ? <CountUp end={stat.topicCount} duration={2} /> : 0}
+                {inView ? <CountUp end={stat.topicCount} duration={1.7} /> : 0}
               </span>
               {stat?.countIcon === "true" && <span>+</span>}
             </div>
