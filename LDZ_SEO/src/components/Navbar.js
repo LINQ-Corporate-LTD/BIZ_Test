@@ -356,7 +356,7 @@
 // export default Navbar;
 
 // code After added Google Translation
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../assets/css/navbar.css";
 import GoogleTranslate from "./GoogleTranslate";
@@ -399,8 +399,12 @@ const Navbar = ({ disableScrollEffect = false, forceScrolled = false }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
   const [activeNavItem, setActiveNavItem] = useState(null);
-  // Use SSR navItems; fall back to empty array while waiting (won't trigger a fetch)
-  const navItems = (ssrNavItems || []).filter(item => item.isChecked === "Yes");
+  const [activeModule, setActiveModule] = useState(null);
+  // Memoized so the array reference is stable — prevents useEffect from re-running every render
+  const navItems = useMemo(
+    () => (ssrNavItems || []).filter(item => item.isChecked === "Yes"),
+    [ssrNavItems]
+  );
 
   // ✅ Client-side fallback: fetch navLogos if SSR data is null
   useEffect(() => {
@@ -486,6 +490,16 @@ const Navbar = ({ disableScrollEffect = false, forceScrolled = false }) => {
     };
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    const active = navItems.find(item => {
+      if (item?.dropdown?.length) {
+        return item.dropdown.some(sub => sub.href === location.pathname);
+      }
+      return item.href === location.pathname;
+    });
+    setActiveModule(active ? active.name : null);
+  }, [location.pathname, navItems]);
+
   const sponsorLogoWhite = "https://www.direct-lithium-extraction-show.com/api/images/sponsor/1760958766497-923906797.png"
   const sponsorLogoBlack = "https://www.direct-lithium-extraction-show.com/api/images/sponsor/1760958766497-534741386.png"
 
@@ -558,7 +572,6 @@ const Navbar = ({ disableScrollEffect = false, forceScrolled = false }) => {
             <ul>
               {navItems.map((item, index) => {
                 const hasDropdown = item.dropdown?.length;
-
                 if (less1024) {
                   const isActive = activeMobileDropdown === index;
 
@@ -629,7 +642,7 @@ const Navbar = ({ disableScrollEffect = false, forceScrolled = false }) => {
                       activeNavItem !== index && setHoveredIndex(null)
                     }
                   >
-                    <a href={item.href}>{item.name}</a>
+                    <a className={activeModule === item.name ? "navbar-active-no-hover" : ""} href={item.href}>{item.name}</a>
 
                     {hasDropdown && (
                       <div

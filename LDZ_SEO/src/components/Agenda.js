@@ -439,7 +439,7 @@ const Agenda = () => {
         {seoImage && <meta name="twitter:image" content={seoImage} />}
         <link
           rel="canonical"
-          href="https://www.linq-staging-site.com/agenda-page"
+          href="https://www.linq-staging-site.com/agenda"
         />
       </Helmet>
       <Navbar forceScrolled />
@@ -2946,42 +2946,43 @@ const Agenda = () => {
             <SubscribeForm />
           </article>
         ) : (
-          <div className="Agenda_contain__zWX4U">
-            <FeaturedSpeaker title={"highlights from our last show"} />
-            <div className="Agenda_container__L3EFb">
-              <h2>view the program</h2>
-              <p>
-                To view the event program, please verify your email address
-                below.
-              </p>
-              <form
-                className="WDRM_2025_agenda_form"
-                encType="multipart/form-data"
-                method="POST"
-                data-hs-cf-bound="true"
-                onSubmit={emailSubmitBtnClk}
-              >
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Email address"
-                    value={emailVerification}
-                    onChange={(e) => {
-                      setEmailVerification(e.target.value);
-                      if (isAgendaEmailMessage) checkOnChangeEmail();
-                      setEmailVerificationError(false);
-                      setBlockedDomainError(false);
-                    }}
-                  ></input>
-                  {isAgendaEmailMessage}
-                </div>
-                <input
-                  type="submit"
-                  value={isVerify ? "verifying" : "verify"}
-                ></input>
-              </form>
-            </div>
-          </div>
+          navigate("/agenda-page")
+          // <div className="Agenda_contain__zWX4U">
+          //   <FeaturedSpeaker title={"highlights from our last show"} />
+          //   <div className="Agenda_container__L3EFb">
+          //     <h2>view the program</h2>
+          //     <p>
+          //       To view the event program, please verify your email address
+          //       below.
+          //     </p>
+          //     <form
+          //       className="WDRM_2025_agenda_form"
+          //       encType="multipart/form-data"
+          //       method="POST"
+          //       data-hs-cf-bound="true"
+          //       onSubmit={emailSubmitBtnClk}
+          //     >
+          //       <div>
+          //         <input
+          //           type="email"
+          //           placeholder="Email address"
+          //           value={emailVerification}
+          //           onChange={(e) => {
+          //             setEmailVerification(e.target.value);
+          //             if (isAgendaEmailMessage) checkOnChangeEmail();
+          //             setEmailVerificationError(false);
+          //             setBlockedDomainError(false);
+          //           }}
+          //         ></input>
+          //         {isAgendaEmailMessage}
+          //       </div>
+          //       <input
+          //         type="submit"
+          //         value={isVerify ? "verifying" : "verify"}
+          //       ></input>
+          //     </form>
+          //   </div>
+          // </div>
         )}
       </div>
       {/* <div className="pt-[90px]">

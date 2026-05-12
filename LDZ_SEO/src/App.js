@@ -58,34 +58,35 @@ import { ToastContainer } from "react-toastify";
 import Home from "./components/Home";
 
 // Lazy-loaded – only downloaded when the user navigates to that route
-const ContactUs            = lazy(() => import("./components/ContactUs"));
-const Register             = lazy(() => import("./components/Register"));
-const Venue                = lazy(() => import("./components/Venue"));
-const Sponsor              = lazy(() => import("./components/Sponsor"));
-const SponsorDescription   = lazy(() => import("./components/SponsorDescription"));
-const MediaPartners        = lazy(() => import("./components/MediaPartners"));
-const Agenda               = lazy(() => import("./components/Agenda"));
-const WhoShouldAttend      = lazy(() => import("./components/WhoShouldAttend"));
-const Faq                  = lazy(() => import("./components/Faq"));
-const CallForPresentation  = lazy(() => import("./components/CallForPresentation"));
-const Speakers             = lazy(() => import("./components/Speakers"));
+const ContactUs = lazy(() => import("./components/ContactUs"));
+const Register = lazy(() => import("./components/Register"));
+const Venue = lazy(() => import("./components/Venue"));
+const Sponsor = lazy(() => import("./components/Sponsor"));
+const SponsorDescription = lazy(() => import("./components/SponsorDescription"));
+const MediaPartners = lazy(() => import("./components/MediaPartners"));
+const Agenda = lazy(() => import("./components/Agenda"));
+const AgendaPage = lazy(() => import("./components/AgendaPage"));
+const WhoShouldAttend = lazy(() => import("./components/WhoShouldAttend"));
+const Faq = lazy(() => import("./components/Faq"));
+const CallForPresentation = lazy(() => import("./components/CallForPresentation"));
+const Speakers = lazy(() => import("./components/Speakers"));
 const TrendDescriptionPage = lazy(() => import("./components/TrendDescriptionPage"));
-const ExhibitorPackages    = lazy(() => import("./components/ExhibitorPackages"));
-const NewsDescription      = lazy(() => import("./components/NewsDescription"));
-const SpeakerProfile       = lazy(() => import("./components/SpeakersProfile"));
-const Attandees            = lazy(() => import("./components/Attandees"));
-const AddDelegateForm      = lazy(() => import("./components/AddDelegateForm"));
-const BookingForm          = lazy(() => import("./components/BookingForm"));
+const ExhibitorPackages = lazy(() => import("./components/ExhibitorPackages"));
+const NewsDescription = lazy(() => import("./components/NewsDescription"));
+const SpeakerProfile = lazy(() => import("./components/SpeakersProfile"));
+const Attandees = lazy(() => import("./components/Attandees"));
+const AddDelegateForm = lazy(() => import("./components/AddDelegateForm"));
+const BookingForm = lazy(() => import("./components/BookingForm"));
 const AddSponsorDelegateForm = lazy(() => import("./components/AddSponsorDelegateForm"));
-const News                 = lazy(() => import("./components/News"));
-const RemindMeLater        = lazy(() => import("./components/RemindMe"));
-const PrivacyPolicy        = lazy(() => import("./components/privacyPolicy"));
-const CookiePolicy         = lazy(() => import("./components/CookiePolicy"));
-const ThankYouPage         = lazy(() => import("./components/thankyouPage"));
-const TermsAndConditions   = lazy(() => import("./components/TermsAndConditions"));
-const Error404             = lazy(() => import("./components/Error404"));
-const SlideShare           = lazy(() => import("./components/slideShare"));
-const PayOnline            = lazy(() => import("./components/payOnline"));
+const News = lazy(() => import("./components/News"));
+const RemindMeLater = lazy(() => import("./components/RemindMe"));
+const PrivacyPolicy = lazy(() => import("./components/privacyPolicy"));
+const CookiePolicy = lazy(() => import("./components/CookiePolicy"));
+const ThankYouPage = lazy(() => import("./components/thankyouPage"));
+const TermsAndConditions = lazy(() => import("./components/TermsAndConditions"));
+const Error404 = lazy(() => import("./components/Error404"));
+const SlideShare = lazy(() => import("./components/slideShare"));
+const PayOnline = lazy(() => import("./components/payOnline"));
 
 function App({ ssrData }) {
   const initialData =
@@ -150,7 +151,8 @@ function App({ ssrData }) {
               <Route path="sponsors" element={<Sponsor />} />
               <Route path="sponsor/:slug" element={<SponsorDescription />} />
               <Route path="media-partners" element={<MediaPartners />} />
-              <Route path="agenda-page" element={<Agenda />} />
+              <Route path="agenda" element={<Agenda />} />
+              <Route path="agenda-page" element={<AgendaPage />} />
               <Route path="who-should-attend" element={<WhoShouldAttend />} />
               <Route path="faq" element={<Faq />} />
               <Route path="speakers" element={<CallForPresentation />} />
