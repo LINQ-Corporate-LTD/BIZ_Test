@@ -415,8 +415,10 @@ const Agenda = () => {
     const savedEmail = Cookies.get("agendaEmailVerify");
     if (savedEmail) {
       setAgendaVerification(true);
+    } else {
+      navigate("/agenda-page");
     }
-  }, []);
+  }, [navigate]);
 
   const pageSeo = usePageSeo("agenda");
   const seoTitle = pageSeo.pageMetaTitle;
@@ -2946,7 +2948,11 @@ const Agenda = () => {
             <SubscribeForm />
           </article>
         ) : (
-          navigate("/agenda-page")
+          <article className="AgendaScreen_container__D1lH-">
+            <div className="Highlights_container__Rzpzy">
+              <h1>Highlights of the Program</h1>
+            </div>
+          </article>
           // <div className="Agenda_contain__zWX4U">
           //   <FeaturedSpeaker title={"highlights from our last show"} />
           //   <div className="Agenda_container__L3EFb">

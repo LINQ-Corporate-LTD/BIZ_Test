@@ -18,9 +18,8 @@ import rightArrowIcon from '../assets/WebCommonImages/icon-arrow-right.png'
 const FeaturedSpeaker = ({ title }) => {
   const navigate = useNavigate();
   const sliderRef = useRef(null);
-  // ✅ SSR data — no useEffect fetch
   const ssrSpeakerList = useSSRData("speakers");
-  const speakerList = ssrSpeakerList || [];
+  const [speakerList, setSpeakerList] = useState(ssrSpeakerList || []);
 
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 1200
@@ -31,6 +30,20 @@ const FeaturedSpeaker = ({ title }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // Client-side fallback: fetch speakers when arriving via React Router navigation
+  // (window.__INITIAL_DATA__ is not updated on SPA route changes, so SSR data may be empty)
+  useEffect(() => {
+    if (ssrSpeakerList?.length > 0) return;
+    fetch("https://www.linq-staging-site.com/admin1/eventspeakers")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.status && Array.isArray(data.eventSpeakersList)) {
+          setSpeakerList(data.eventSpeakersList);
+        }
+      })
+      .catch(() => {});
+  }, [ssrSpeakerList]);
 
   const slidesToShow = 6;
   const settings = {
