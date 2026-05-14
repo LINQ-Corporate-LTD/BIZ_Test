@@ -620,3 +620,10 @@ class sponsorCards(models.Model):
     created_by = models.CharField(null=False,max_length=50,default='No')
     updated_by = models.CharField(null=False,max_length=50,default='No')
     isDelete = models.CharField(default="No",max_length=10)
+
+class InvoiceNumberTracker(models.Model):
+    invoiceNo = models.CharField(max_length=50, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-created_at']

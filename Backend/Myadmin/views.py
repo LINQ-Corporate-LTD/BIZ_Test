@@ -1,10 +1,10 @@
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from django.contrib.auth.models import User, Permission, Group
-
-
+from django.db import transaction
 from rest_framework.decorators import api_view, permission_classes, authentication_classes, throttle_classes
 from rest_framework.permissions import AllowAny
+import re
 import json
 import random
 from datetime import datetime, timedelta
@@ -19,7 +19,7 @@ from django.db.models import F
 from Myadmin.serializers import eventAgendaSerializer, eventIndustryTrendsSerializer
 from rest_framework.throttling import AnonRateThrottle
 # Create your views here.
-from .models import homePageNavLogoData,homePageNavMainCategories,homePageNavSubCategories,themeColorSettings,homePageVideoSectionInput,videoSectionUserOptions,speakerSection,homePageThirdSection,keyPointsSection,keyPointsSectionPoints,countSection,countSectionTopic,testimonialSection,pastAttandeesSection,sponsorSection, footerFirstSectionOptions, footerSocialMediaOptions,companiesLogoSection,registerPageSettings,whoShouldAttendPageData,speakerPageData,speakerPageSectionThreePoints,sponsorPageData,sponsorPageBulletData,venuePageData,venuePageGallery,newsCategory,generalNewsPoint,latestNews,topNews,subscribers,contactUsData,contactUsPageData,contactUsHelpData,pressMediaPageData,pressMediaPageBoxData,mediaPageHelpers,standOutCrowdRequestData,becomeSpeakerRequestData,quickProposalRequestData,endUserPassRegistrationRequestData,pastAttandeeHomeData,footerOptions,toEmails,agendaSubscriber,calenderSubscriber,SidebarModule, SidebarSubModule, AdminUser, AdminRole, sponsorCards
+from .models import homePageNavLogoData,homePageNavMainCategories,homePageNavSubCategories,themeColorSettings,homePageVideoSectionInput,videoSectionUserOptions,speakerSection,homePageThirdSection,keyPointsSection,keyPointsSectionPoints,countSection,countSectionTopic,testimonialSection,pastAttandeesSection,sponsorSection, footerFirstSectionOptions, footerSocialMediaOptions,companiesLogoSection,registerPageSettings,whoShouldAttendPageData,speakerPageData,speakerPageSectionThreePoints,sponsorPageData,sponsorPageBulletData,venuePageData,venuePageGallery,newsCategory,generalNewsPoint,latestNews,topNews,subscribers,contactUsData,contactUsPageData,contactUsHelpData,pressMediaPageData,pressMediaPageBoxData,mediaPageHelpers,standOutCrowdRequestData,becomeSpeakerRequestData,quickProposalRequestData,endUserPassRegistrationRequestData,pastAttandeeHomeData,footerOptions,toEmails,agendaSubscriber,calenderSubscriber,SidebarModule, SidebarSubModule, AdminUser, AdminRole, sponsorCards, InvoiceNumberTracker
 from Event.models import eventDetails,eventPastAttandees,eventExpertSpeakers,eventSpeakers,eventTestimonials,eventSponsors,eventIndustryTrends,relatedEvents,eventDeligatePackages,deligatePackageInclusionPoints,eventAgenda,eventCoreAttandees,eventParticipatedIndustries,eventFaqs,groupPassRegistrationRequestData,registeredCompanyDetails,registeredDelegates,delegatesAddOns,paymentOptionImage,offerCoupon,delegateTransectionData,eventGeneralSettings,offerCouponHistory,addOnsHistory,sponsorPackageTypes,sponsorPackageAddOnTypes,sponsorPackageAddOns,sponseredCompanyDetails,registeredSponseredDelegates,sponsoredCompanyAddOnsDetails,sponsorCompanyTransectionData,sponsorOfferCouponHistory,eventLeaders,eventSlideShares,eventSlideSharesAttandees,slideSharesAccessPersons,payOnlineTransectionData,blockedEmailDomains,sponsorOfferCoupon,eventProject,pageSeoSettings
 import requests
 import jwt
@@ -4306,15 +4306,6 @@ def add_delegate(request):
     #------------------- code for Add data of Delegate Transection -------------------#
     check_db_5 =delegateTransectionData()
     check_db_5.relatedCompanyId = check_db_1
-    # --- Auto Invoice Number Generation ---
-    event = eventDetails.objects.first()   # first entry from eventDetails model
-    eventShortCode = event.eventShortCode
-    eventYear = event.eventYear
-    companyId = check_db_1.id
-    today_str = datetime.now().strftime("%Y%m%d")
-
-    invoice_no = f"{eventShortCode}{eventYear}{companyId}{today_str}"
-    check_db_5.invoiceNo = invoice_no
     if 'totalPassAmount' in request.POST:
         check_db_5.totalPassAmount = response['totalPassAmount']
     if 'discountAmount' in request.POST:
@@ -4329,6 +4320,8 @@ def add_delegate(request):
         check_db_5.transectionId = response['transectionId']
     if 'transectionType' in request.POST:
         check_db_5.transectionType = response['transectionType']
+    if 'invoiceNo' in request.POST:
+        check_db_5.invoiceNo = response['invoiceNo']
 
     check_db_5.save()
 
@@ -4414,15 +4407,6 @@ def add_newSponsor(request):
     #------------------- code for Add data of Delegate Transection -------------------#
     check_db_5 =sponsorCompanyTransectionData()
     check_db_5.relatedSponsorCompanyId = check_db_1
-    # --- Auto Invoice Number Generation ---
-    event = eventDetails.objects.first()   # first entry from eventDetails model
-    eventShortCode = event.eventShortCode
-    eventYear = event.eventYear
-    companyId = check_db_1.id
-    today_str = datetime.now().strftime("%Y%m%d")
-    invoice_no = f"SPR{eventShortCode}{eventYear}{companyId}{today_str}"
-
-    check_db_5.invoiceNo = invoice_no
     if 'totalPassAmount' in request.POST:
         check_db_5.totalPassAmount = response['totalPassAmount']
     if 'additionalDelegateAmoount' in request.POST:
@@ -4439,6 +4423,8 @@ def add_newSponsor(request):
         check_db_5.transectionId = response['transectionId']
     if 'transectionType' in request.POST:
         check_db_5.transectionType = response['transectionType']
+    if 'invoiceNo' in request.POST:
+        check_db_5.invoiceNo = response['invoiceNo']
 
     check_db_5.save()
 
@@ -6379,16 +6365,16 @@ def secure_login_slideShare(request):
         "success": True,
     })
 
-def generate_invoice_number(request):
-    while True:
-        number = random.randint(1000, 9999)
-        invoice_no = f"LDZ26AUS-{number}"
+# def generate_invoice_number(request):
+#     while True:
+#         number = random.randint(1000, 9999)
+#         invoice_no = f"LDZ26AUS-{number}"
         
-        delegate_exists = delegateTransectionData.objects.filter(invoiceNo=invoice_no).exists()
-        sponsor_exists = sponsorCompanyTransectionData.objects.filter(invoiceNo=invoice_no).exists()
+#         delegate_exists = delegateTransectionData.objects.filter(invoiceNo=invoice_no).exists()
+#         sponsor_exists = sponsorCompanyTransectionData.objects.filter(invoiceNo=invoice_no).exists()
         
-        if not delegate_exists and not sponsor_exists:
-            return JsonResponse({"invoiceNo": invoice_no})
+#         if not delegate_exists and not sponsor_exists:
+#             return JsonResponse({"invoiceNo": invoice_no})
 
 #---------------------------- Api For Get Pay Online Transection List ----------------------------#
 @permission_classes((AllowAny,))
@@ -7048,3 +7034,34 @@ def delete_sponsorCard(request):
     check_db.isDelete = response['isDelete']
     check_db.save()
     return JsonResponse({'status': True, "message": "Record Updated Successfully"})
+
+
+#------------------- Api For Genrate Invoice No. -------------------#
+def generate_invoice_number(request):
+    event = eventDetails.objects.first()
+    
+    if not event:
+        return JsonResponse({"error": "Event not found"}, status=404)
+    
+    short_code = event.eventShortCode.upper()
+    year_short = event.eventYear[-2:]   # "2026" → "26"
+    city_code = event.eventCityShortCode.upper()
+    
+    prefix = f"{short_code}{year_short}{city_code}"  # e.g. "LDZ26AUS"
+
+    with transaction.atomic():
+        last = InvoiceNumberTracker.objects.filter(
+            invoiceNo__startswith=prefix + "-"
+        ).order_by('-id').first()
+
+        if last:
+            last_number = int(last.invoiceNo.split("-")[-1])
+        else:
+            last_number = 2500  # series starts at 2501
+
+        next_number = last_number + 1
+        invoice_no = f"{prefix}-{next_number}"
+
+        InvoiceNumberTracker.objects.create(invoiceNo=invoice_no)
+
+    return JsonResponse({"invoiceNo": invoice_no})

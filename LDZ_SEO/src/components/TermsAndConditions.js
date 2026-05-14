@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "./Navbar";
 import Footer from "../Footer";
 import "../assets/css/TermsAndConditions.css";
@@ -16,6 +16,25 @@ const TermsAndConditions = () => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const conductRef1 = useRef(null);
+  const conductRef2 = useRef(null);
+  const CONDUCT_URL = "https://iq-hub.com/code-of-conduct";
+
+  useEffect(() => {
+    const observers = [conductRef1, conductRef2].map((ref) => {
+      const link = ref.current;
+      if (!link) return null;
+      const observer = new MutationObserver(() => {
+        observer.disconnect();
+        link.setAttribute("href", CONDUCT_URL);
+        observer.observe(link, { attributes: true, attributeFilter: ["href"] });
+      });
+      observer.observe(link, { attributes: true, attributeFilter: ["href"] });
+      return observer;
+    });
+    return () => observers.forEach((obs) => obs?.disconnect());
   }, []);
 
   const pageSeo = usePageSeo("terms-conditions");
@@ -121,7 +140,14 @@ const TermsAndConditions = () => {
               <h4>8. Code of Conduct</h4>
               <p>
                 All Attendees are subject to a{' '}
-                <a href="https://iq-hub.com/code-of-conduct" target="_blank" rel="noopener noreferrer">
+                <a
+                  ref={conductRef1}
+                  href={CONDUCT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={(e) => { e.currentTarget.setAttribute("href", CONDUCT_URL); }}
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); (window.__originalOpen || window.open)(CONDUCT_URL, "_blank", "noopener,noreferrer"); }}
+                >
                   Code of Conduct
                 </a>
                 , separately detailed, which unambiguously delineates behavioral expectations, including policies on harassment, discrimination, and other forms of misconduct.
@@ -255,7 +281,14 @@ const TermsAndConditions = () => {
               <h4>26. Right to Refuse Admission</h4>
               <p>
                 The Organizer unequivocally reserves the absolute right to refuse admission or eject Attendees for non-compliance with the{' '}
-                <a href="https://iq-hub.com/code-of-conduct" target="_blank" rel="noopener noreferrer">
+                <a
+                  ref={conductRef2}
+                  href={CONDUCT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={(e) => { e.currentTarget.setAttribute("href", CONDUCT_URL); }}
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); (window.__originalOpen || window.open)(CONDUCT_URL, "_blank", "noopener,noreferrer"); }}
+                >
                   Code of Conduct
                 </a>, or deems the Attendee to be a commercial risk to the Event.
               </p>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./assets/css/footer.css";
 import { toast } from "react-toastify";
@@ -25,6 +25,20 @@ const Footer = () => {
   const trends = useSSRData("trends") || [];
   const [footerNavOptions, setFooterNavOptions] = useState([]);
   const { eventDetails, eventGeneralSettings, navLogos } = useApiData();
+  const iqHubRef = useRef(null);
+  const IQ_HUB_URL = "https://iq-hub.com/";
+
+  useEffect(() => {
+    const link = iqHubRef.current;
+    if (!link) return;
+    const observer = new MutationObserver(() => {
+      observer.disconnect();
+      link.setAttribute("href", IQ_HUB_URL);
+      observer.observe(link, { attributes: true, attributeFilter: ["href"] });
+    });
+    observer.observe(link, { attributes: true, attributeFilter: ["href"] });
+    return () => observer.disconnect();
+  }, []);
 
   const toSlug = (str) => {
     if (!str) return ""; // 🚨 Prevent 'null' stringification
@@ -271,7 +285,18 @@ const Footer = () => {
             <span> | </span>
             <a href="/cookie-policy">Cookie Policy</a>
             <span> | </span>
-            <a target="_blank" href="https://iq-hub.com/">
+            <a
+              ref={iqHubRef}
+              href={IQ_HUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={(e) => { e.currentTarget.setAttribute("href", IQ_HUB_URL); }}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                (window.__originalOpen || window.open)(IQ_HUB_URL, "_blank", "noopener,noreferrer");
+              }}
+            >
               IQ International PTe. LTD
             </a>
           </p>
