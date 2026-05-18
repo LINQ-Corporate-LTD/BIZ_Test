@@ -108,6 +108,15 @@
   .speaker-h1-name {
     font-size: 28px !important;
   }
+
+  .sliderContainer .slick-slide {
+    padding: 10px;
+  }
+
+  .event-slider .slick-slide>div {
+    width: 100%;
+  }
+
 }
 
 html[lang="de"] .navLinksContainer li a,

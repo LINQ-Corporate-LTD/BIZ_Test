@@ -886,88 +886,90 @@ const Sponsors = () => {
                       data-hs-cf-bound="true"
                       onSubmit={submitBtnClk}
                     >
-                      <div>
+                      <div className="LDZ_2026_sponsor_form Form_form__nhNBc form_LDZ">
                         <div>
-                          <input
-                            name="fullname"
-                            type="text"
-                            placeholder="Full name *"
-                            value={fullName}
-                            onChange={(e) => {
-                              setFullName(e.target.value);
-                              if (fullNameErrorMessage) checkOnChange();
-                              setFullNameErr(false);
-                            }}
-                          ></input>
-                          {fullNameErrorMessage}
+                          <div>
+                            <input
+                              name="fullname"
+                              type="text"
+                              placeholder="Full name *"
+                              value={fullName}
+                              onChange={(e) => {
+                                setFullName(e.target.value);
+                                if (fullNameErrorMessage) checkOnChange();
+                                setFullNameErr(false);
+                              }}
+                            ></input>
+                            {fullNameErrorMessage}
+                          </div>
+                          <div>
+                            <input
+                              name="companyname"
+                              type="text"
+                              placeholder="Company name *"
+                              value={companyName}
+                              onChange={(e) => {
+                                setCompanyName(e.target.value);
+                                if (companyErrorMessage) checkOnChange();
+                                setCompanyNameErr(false);
+                              }}
+                            ></input>
+                            {companyErrorMessage}
+                          </div>
                         </div>
                         <div>
-                          <input
-                            name="companyname"
-                            type="text"
-                            placeholder="Company name *"
-                            value={companyName}
-                            onChange={(e) => {
-                              setCompanyName(e.target.value);
-                              if (companyErrorMessage) checkOnChange();
-                              setCompanyNameErr(false);
-                            }}
-                          ></input>
-                          {companyErrorMessage}
+                          <div>
+                            <input
+                              name="mobilenumber"
+                              type="tel"
+                              placeholder="Mobile number *"
+                              value={mobile}
+                              onChange={(e) => {
+                                let value = e.target.value;
+                                // allow + only at the start
+                                if (value.startsWith("+")) {
+                                  value =
+                                    "+" + value.slice(1).replace(/[^0-9]/g, "");
+                                } else {
+                                  value = value.replace(/[^0-9]/g, "");
+                                }
+                                setMobile(value);
+                                setMobileErr(false);
+                                if (mobileErrorMessage) checkOnChange();
+                              }}
+                            ></input>
+                            {mobileErrorMessage}
+                          </div>
+                          <div>
+                            <input
+                              name="email"
+                              type="email"
+                              placeholder="Email address *"
+                              value={email}
+                              onChange={(e) => {
+                                setEmail(e.target.value);
+                                setEmailErr(false);
+                                setEmailErrMsg("");
+                                if (emailErrorMessage) checkOnChange();
+                              }}
+                            ></input>
+                            {emailErrorMessage}
+                          </div>
                         </div>
+                        <div className="Form_textArea__tsfub">
+                          <textarea
+                            name="message"
+                            cols={30}
+                            rows={6}
+                            placeholder="Comments"
+                            value={message}
+                            onChange={(e) => {
+                              setMessage(e.target.value);
+                            }}
+                          ></textarea>
+                        </div>
+                        <button type="submit">submit</button>
                       </div>
-                      <div>
-                        <div>
-                          <input
-                            name="mobilenumber"
-                            type="tel"
-                            placeholder="Mobile number *"
-                            value={mobile}
-                            onChange={(e) => {
-                              let value = e.target.value;
-                              // allow + only at the start
-                              if (value.startsWith("+")) {
-                                value =
-                                  "+" + value.slice(1).replace(/[^0-9]/g, "");
-                              } else {
-                                value = value.replace(/[^0-9]/g, "");
-                              }
-                              setMobile(value);
-                              setMobileErr(false);
-                              if (mobileErrorMessage) checkOnChange();
-                            }}
-                          ></input>
-                          {mobileErrorMessage}
-                        </div>
-                        <div>
-                          <input
-                            name="email"
-                            type="email"
-                            placeholder="Email address *"
-                            value={email}
-                            onChange={(e) => {
-                              setEmail(e.target.value);
-                              setEmailErr(false);
-                              setEmailErrMsg("");
-                              if (emailErrorMessage) checkOnChange();
-                            }}
-                          ></input>
-                          {emailErrorMessage}
-                        </div>
-                      </div>
-                      <div className="Form_textArea__tsfub">
-                        <textarea
-                          name="message"
-                          cols={30}
-                          rows={6}
-                          placeholder="Comments"
-                          value={message}
-                          onChange={(e) => {
-                            setMessage(e.target.value);
-                          }}
-                        ></textarea>
-                      </div>
-                      <button type="submit">submit</button>
                     </form>
                     {successMessage}
                   </div>

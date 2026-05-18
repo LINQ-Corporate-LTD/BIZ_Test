@@ -755,142 +755,144 @@ const ContactUs = () => {
                     data-hs-cf-bound="true"
                     onSubmit={submitBtnClk}
                   >
-                    <div>
+                    <div className="LDZ_2026_request_a_call_back Form_form__nhNBc form_LDZ">
                       <div>
-                        <input
-                          name="fullname"
-                          type="text"
-                          placeholder="Full name *"
-                          value={personName}
-                          onChange={(e) => {
-                            setPersonName(e.target.value);
-                            if (personNameErrorMessage) checkOnChange();
-                            setPersonNameError(false);
-                          }}
-                        ></input>
-                        {personNameErrorMessage}
+                        <div>
+                          <input
+                            name="fullname"
+                            type="text"
+                            placeholder="Full name *"
+                            value={personName}
+                            onChange={(e) => {
+                              setPersonName(e.target.value);
+                              if (personNameErrorMessage) checkOnChange();
+                              setPersonNameError(false);
+                            }}
+                          ></input>
+                          {personNameErrorMessage}
+                        </div>
+                        <div>
+                          <input
+                            name="companyname"
+                            type="text"
+                            placeholder="Company name *"
+                            value={personCompany}
+                            onChange={(e) => {
+                              setPersonCompany(e.target.value);
+                              if (personCompanyErrorMessage) checkOnChange();
+                              setPersonCompanyError(false);
+                            }}
+                          ></input>
+                          {personCompanyErrorMessage}
+                        </div>
                       </div>
                       <div>
-                        <input
-                          name="companyname"
-                          type="text"
-                          placeholder="Company name *"
-                          value={personCompany}
-                          onChange={(e) => {
-                            setPersonCompany(e.target.value);
-                            if (personCompanyErrorMessage) checkOnChange();
-                            setPersonCompanyError(false);
-                          }}
-                        ></input>
-                        {personCompanyErrorMessage}
-                      </div>
-                    </div>
-                    <div>
-                      <div>
-                        <input
-                          name="email"
-                          type="email"
-                          placeholder="Email address *"
-                          value={personEmail}
-                          onChange={(e) => {
-                            setPersonEmail(e.target.value);
-                            if (personEmailErrorMessage) checkOnChange();
-                            setPersonEmailError(false);
-                            setEmailErrMsg("");
-                          }}
-                        ></input>
-                        {personEmailErrorMessage}
-                      </div>
-                      <div>
-                        <input
-                          name="mobilenumber"
-                          type="tel"
-                          placeholder="Mobile number *"
-                          value={personMobile}
-                          onChange={(e) => {
-                            let value = e.target.value;
+                        <div>
+                          <input
+                            name="email"
+                            type="email"
+                            placeholder="Email address *"
+                            value={personEmail}
+                            onChange={(e) => {
+                              setPersonEmail(e.target.value);
+                              if (personEmailErrorMessage) checkOnChange();
+                              setPersonEmailError(false);
+                              setEmailErrMsg("");
+                            }}
+                          ></input>
+                          {personEmailErrorMessage}
+                        </div>
+                        <div>
+                          <input
+                            name="mobilenumber"
+                            type="tel"
+                            placeholder="Mobile number *"
+                            value={personMobile}
+                            onChange={(e) => {
+                              let value = e.target.value;
 
-                            // allow + only at the start
-                            if (value.startsWith("+")) {
-                              value =
-                                "+" + value.slice(1).replace(/[^0-9]/g, "");
-                            } else {
-                              value = value.replace(/[^0-9]/g, "");
-                            }
+                              // allow + only at the start
+                              if (value.startsWith("+")) {
+                                value =
+                                  "+" + value.slice(1).replace(/[^0-9]/g, "");
+                              } else {
+                                value = value.replace(/[^0-9]/g, "");
+                              }
 
-                            setPersonMobile(value);
-                            if (personMobileErrorMessage) checkOnChange();
-                            setPersonMobileError(false);
+                              setPersonMobile(value);
+                              if (personMobileErrorMessage) checkOnChange();
+                              setPersonMobileError(false);
+                            }}
+                            maxLength={16}
+                          ></input>
+                          {personMobileErrorMessage}
+                        </div>
+                      </div>
+                      <div
+                        className="Form_textArea__tsfub"
+                        style={{ marginBottom: "23px" }}
+                      >
+                        <textarea
+                          name="message"
+                          cols={30}
+                          rows={6}
+                          placeholder="Message"
+                          value={message}
+                          onChange={(e) => {
+                            setMessage(e.target.value);
                           }}
-                          maxLength={16}
-                        ></input>
-                        {personMobileErrorMessage}
+                        ></textarea>
                       </div>
-                    </div>
-                    <div
-                      className="Form_textArea__tsfub"
-                      style={{ marginBottom: "23px" }}
-                    >
-                      <textarea
-                        name="message"
-                        cols={30}
-                        rows={6}
-                        placeholder="Message"
-                        value={message}
-                        onChange={(e) => {
-                          setMessage(e.target.value);
-                        }}
-                      ></textarea>
-                    </div>
-                    <div class="Form_checkboxContainer__UtH6X">
-                      <div>
+                      <div class="Form_checkboxContainer__UtH6X">
                         <div>
-                          <label style={{ margin: "0px" }}>
-                            Tell me more about
-                          </label>
-                        </div>
-                        <div>
-                          <input
-                            type="checkbox"
-                            id="speaker"
-                            name="speaker_opportunities"
-                            value="Checked"
-                            onChange={handleCheckboxChange}
-                            checked={reason.includes("speaker_opportunities")}
-                          ></input>
-                          <label>Becoming a speaker</label>
-                        </div>
-                        <div>
-                          <input
-                            type="checkbox"
-                            id="sponsorship"
-                            name="sponsorship_options"
-                            value="Checked"
-                            onChange={handleCheckboxChange}
-                            checked={reason.includes("sponsorship_options")}
-                          ></input>
-                          <label>Sponsorship packages</label>
-                        </div>
-                        <div>
-                          <input
-                            type="checkbox"
-                            id="attending"
-                            name="attending_the_event"
-                            value="Checked"
-                            onChange={handleCheckboxChange}
-                            checked={reason.includes("attending_the_event")}
-                          ></input>
-                          <label>Attending the show</label>
+                          <div>
+                            <label style={{ margin: "0px" }}>
+                              Tell me more about
+                            </label>
+                          </div>
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="speaker"
+                              name="speaker_opportunities"
+                              value="Checked"
+                              onChange={handleCheckboxChange}
+                              checked={reason.includes("speaker_opportunities")}
+                            ></input>
+                            <label>Becoming a speaker</label>
+                          </div>
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="sponsorship"
+                              name="sponsorship_options"
+                              value="Checked"
+                              onChange={handleCheckboxChange}
+                              checked={reason.includes("sponsorship_options")}
+                            ></input>
+                            <label>Sponsorship packages</label>
+                          </div>
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="attending"
+                              name="attending_the_event"
+                              value="Checked"
+                              onChange={handleCheckboxChange}
+                              checked={reason.includes("attending_the_event")}
+                            ></input>
+                            <label>Attending the show</label>
+                          </div>
                         </div>
                       </div>
+                      <button
+                        type="submit"
+                        onMouseEnter={(e) => handleSubmitHover(e, true)}
+                        onMouseLeave={(e) => handleSubmitHover(e, false)}
+                      >
+                        submit
+                      </button>
                     </div>
-                    <button
-                      type="submit"
-                      onMouseEnter={(e) => handleSubmitHover(e, true)}
-                      onMouseLeave={(e) => handleSubmitHover(e, false)}
-                    >
-                      submit
-                    </button>
                   </form>
                   {successMessage}
                 </div>
