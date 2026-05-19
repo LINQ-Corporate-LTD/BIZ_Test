@@ -113,10 +113,10 @@ body .home-banner-container .innerContainer .upper .graphic .text:before {
     top: -97px;
 }
 
-body .home-banner-container .innerContainer .upper .graphic .text h1 {
+/* body .home-banner-container .innerContainer .upper .graphic .text h1 {
     color: #fff;
     max-width: 752px;
-}
+} */
 
 .home-banner-container .innerContainer .upper .graphic .text h1 {
     color: initial;
@@ -130,10 +130,6 @@ body .home-banner-container .innerContainer .upper .graphic .text h1 {
     text-transform: uppercase;
     transform: scalex(.9);
     transform-origin: left center;
-}
-
-.home-banner-container .innerContainer .upper .graphic .text span {
-    color: var(--primary-color);
 }
 
 .home-banner-container .innerContainer .upper .graphic .text p {
@@ -221,6 +217,32 @@ body .home-banner-container .innerContainer .upper .graphic .text h1 {
     color: var(--secondary-color);
 }
 
+.home-banner-container .innerContainer .upper .graphic .text span {
+    color: #fff;
+}
+
+body .home-banner-container .innerContainer .upper .graphic .text span {
+    color: #fff;
+    display: block;
+}
+
+.home-banner-container .innerContainer .upper .graphic .text div>span {
+    color: #fff;
+    font-size: 2em;
+    font-weight: 800;
+    line-height: 1em;
+    padding-left: 2px;
+    text-shadow: none;
+    text-transform: uppercase;
+    width: max-content;
+}
+
+.home-banner-container .innerContainer .upper .graphic .text div>span sup {
+    color: #fff;
+    font-size: .5em;
+}
+
+
 @media only screen and (max-width: 1460px) {
     .home-banner-container .innerContainer .upper .graphic .text:before {
         height: 329px;
@@ -236,10 +258,10 @@ body .home-banner-container .innerContainer .upper .graphic .text h1 {
     }
 
 
-    body .home-banner-container .innerContainer .upper .graphic .text h1 {
+    /* body .home-banner-container .innerContainer .upper .graphic .text h1 {
         color: #fff;
         max-width: 410px;
-    }
+    } */
 
     .home-banner-container .innerContainer .upper .graphic .text h1 {
         font-size: 50px;
@@ -254,6 +276,11 @@ body .home-banner-container .innerContainer .upper .graphic .text h1 {
     .home-banner-container .innerContainer .upper .graphic .text p {
         font-size: 21px;
         width: 90%;
+    }
+
+    .home-banner-container .innerContainer .upper .graphic .text div>span {
+        font-size: 1.5em;
+        line-height: 1.4em;
     }
 }
 
@@ -313,6 +340,10 @@ body .home-banner-container .innerContainer .upper .graphic .text h1 {
         width: 100%;
     }
 
+    body .home-banner-container .innerContainer .upper .graphic .text h1 {
+        max-width: 365px;
+    }
+
     .home-banner-container .innerContainer .upper .graphic .text p {
         font-size: 16px;
         width: 100%;
@@ -327,6 +358,11 @@ body .home-banner-container .innerContainer .upper .graphic .text h1 {
         margin: 0 auto 10px;
         max-width: none;
         width: 100%;
+    }
+
+    .home-banner-container .innerContainer .upper .graphic .text div>span {
+        font-size: 1.3em;
+        line-height: 2.3em;
     }
 }
 
@@ -372,6 +408,14 @@ body .home-banner-container .innerContainer .upper .graphic .text h1 {
 
     body .home-banner-container .innerContainer .upper .graphic .text:before {
         left: -32px;
+    }
+
+    body .home-banner-container .innerContainer .upper .graphic .text h1 {
+        max-width: 266px;
+    }
+
+    .home-banner-container .innerContainer .upper .graphic .text div>span {
+        font-size: 1em;
     }
 }
 
@@ -447,10 +491,10 @@ body .home-banner-container .innerContainer .upper .graphic .text h1 {
     }
 
 
-    body .home-banner-container .innerContainer .upper .graphic .text h1 {
+    /* body .home-banner-container .innerContainer .upper .graphic .text h1 {
         color: #fff;
         max-width: 410px;
-    }
+    } */
 
     .home-banner-container .innerContainer .upper .graphic .text h1 {
         font-size: 27px;
