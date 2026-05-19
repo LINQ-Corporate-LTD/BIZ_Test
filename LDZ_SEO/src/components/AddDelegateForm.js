@@ -1640,7 +1640,7 @@ const CompanyRegistrationForm = () => {
                 <h1>Registration</h1>
                 <form
                   action="#"
-                  className="WDRM_2025_booking_form form_WDRM"
+                  className="LDZ_2026_booking_form form_LDZ"
                   data-hs-cf-bound="true"
                   onSubmit={handleSubmit}
                 >

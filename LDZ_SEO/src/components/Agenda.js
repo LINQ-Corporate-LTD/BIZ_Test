@@ -2758,95 +2758,97 @@ const Agenda = () => {
                     BECOME A SPEAKER & JOIN THE CONVERSATION
                   </h2>
                   <form
-                    className="WDRM_2025_quick_proposal Form_form__nhNBc form_WDRM"
+                    id="LDZ-(Become a Speaker & Join the Conversation 2026)"
                     method="POST"
                     data-hs-cf-bound="true"
                     onSubmit={submitBtnClk}
                   >
-                    <div>
+                    <div className="LDZ_2026_quick_proposal Form_form__nhNBc form_LDZ">
                       <div>
-                        <input
-                          name="fullname"
-                          type="text"
-                          placeholder="Full name *"
-                          // required
-                          value={personName}
-                          onChange={(e) => {
-                            setPersonName(e.target.value);
-                            if (personNameErrorMessage) checkOnChange();
-                            setPersonNameError(false);
-                          }}
-                        ></input>
-                        {personNameErrorMessage}
+                        <div>
+                          <input
+                            name="fullname"
+                            type="text"
+                            placeholder="Full name *"
+                            // required
+                            value={personName}
+                            onChange={(e) => {
+                              setPersonName(e.target.value);
+                              if (personNameErrorMessage) checkOnChange();
+                              setPersonNameError(false);
+                            }}
+                          ></input>
+                          {personNameErrorMessage}
+                        </div>
+                        <div>
+                          <input
+                            name="companyname"
+                            type="text"
+                            placeholder="Company name *"
+                            // required
+                            value={personCompany}
+                            onChange={(e) => {
+                              setPersonCompany(e.target.value);
+                              if (personCompanyErrorMessage) checkOnChange();
+                              setPersonCompanyError(false);
+                            }}
+                          ></input>
+                          {personCompanyErrorMessage}
+                        </div>
                       </div>
                       <div>
-                        <input
-                          name="companyname"
-                          type="text"
-                          placeholder="Company name *"
-                          // required
-                          value={personCompany}
-                          onChange={(e) => {
-                            setPersonCompany(e.target.value);
-                            if (personCompanyErrorMessage) checkOnChange();
-                            setPersonCompanyError(false);
-                          }}
-                        ></input>
-                        {personCompanyErrorMessage}
+                        <div>
+                          <input
+                            name="proposed"
+                            type="text"
+                            placeholder="Proposed title *"
+                            // required
+                            value={personProposedTitle}
+                            onChange={(e) => {
+                              setPersonProposedTitle(e.target.value);
+                              if (personProposedTitleErrorMessage) checkOnChange();
+                              setPersonProposedTitleError(false);
+                            }}
+                          ></input>
+                          {personProposedTitleErrorMessage}
+                        </div>
+                        <div>
+                          <input
+                            name="email"
+                            // type="email"
+                            placeholder="Email address *"
+                            // required
+                            value={personEmail}
+                            onChange={(e) => {
+                              setPersonEmail(e.target.value);
+                              if (personEmailErrorMessage) checkOnChange();
+                              setPersonEmailError(false);
+                            }}
+                          ></input>
+                          {personEmailErrorMessage}
+                        </div>
                       </div>
+                      <div className="Form_textArea__tsfub">
+                        <textarea
+                          name="message"
+                          cols={30}
+                          rows={6}
+                          placeholder="Brief outline"
+                          value={briefoutline}
+                          onChange={(e) => {
+                            setBriefOutline(e.target.value);
+                          }}
+                        ></textarea>
+                      </div>
+                      <button
+                        style={submitButtonStyle}
+                        type="submit"
+                        onMouseEnter={(e) => handleSubmitHover(e, true)}
+                        onMouseLeave={(e) => handleSubmitHover(e, false)}
+                      >
+                        get back to me
+                      </button>
                     </div>
-                    <div>
-                      <div>
-                        <input
-                          name="proposed"
-                          type="text"
-                          placeholder="Proposed title *"
-                          // required
-                          value={personProposedTitle}
-                          onChange={(e) => {
-                            setPersonProposedTitle(e.target.value);
-                            if (personProposedTitleErrorMessage) checkOnChange();
-                            setPersonProposedTitleError(false);
-                          }}
-                        ></input>
-                        {personProposedTitleErrorMessage}
-                      </div>
-                      <div>
-                        <input
-                          name="email"
-                          // type="email"
-                          placeholder="Email address *"
-                          // required
-                          value={personEmail}
-                          onChange={(e) => {
-                            setPersonEmail(e.target.value);
-                            if (personEmailErrorMessage) checkOnChange();
-                            setPersonEmailError(false);
-                          }}
-                        ></input>
-                        {personEmailErrorMessage}
-                      </div>
-                    </div>
-                    <div className="Form_textArea__tsfub">
-                      <textarea
-                        name="message"
-                        cols={30}
-                        rows={6}
-                        placeholder="Brief outline"
-                        value={briefoutline}
-                        onChange={(e) => {
-                          setBriefOutline(e.target.value);
-                        }}
-                      ></textarea>
-                    </div>
-                    <button
-                      style={submitButtonStyle}
-                      type="submit"
-                      onMouseEnter={(e) => handleSubmitHover(e, true)}
-                      onMouseLeave={(e) => handleSubmitHover(e, false)}
-                    >
-                      get back to me
-                    </button>
                   </form>
                   {successMessage}
                 </div>

@@ -1666,7 +1666,7 @@ const AddSponsorDelegateForm = () => {
                 <h1>Exhibitors Registration</h1>
                 <form
                   action="#"
-                  className="WDRM_2025_sponsor_form form_WDRM"
+                  className="LDZ_2026_sponsor_form form_LDZ"
                   data-hs-cf-bound="true"
                   onSubmit={handleSubmit}
                 >
