@@ -5,7 +5,7 @@ import { Dropdown, DropdownMenu, DropdownToggle, Form } from 'reactstrap';
 //import images
 import logoSm from "../assets/images/logo-sm.png";
 import logoDark from "../assets/images/logo-dark.png";
-import logoLight from "../assets/images/logo-light.png";
+import logoLight from "../assets/images/adminpanel-logo.png";
 
 //import Components
 import SearchOption from '../Components/Common/SearchOption';
@@ -28,11 +28,12 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
     const selectDashboardData = createSelector(
         (state) => state.Layout,
         (state) => ({
-            sidebarVisibilitytype: state.sidebarVisibilitytype})
-      );
+            sidebarVisibilitytype: state.sidebarVisibilitytype
+        })
+    );
     // Inside your component
-    const {sidebarVisibilitytype} = useSelector(selectDashboardData);
-    
+    const { sidebarVisibilitytype } = useSelector(selectDashboardData);
+
 
     const [search, setSearch] = useState(false);
     const toogleSearch = () => {
