@@ -62,9 +62,13 @@ const STATIC_ROUTES = [
     { url: "/news", changefreq: "daily", priority: "0.8" },
     { url: "/attendees", changefreq: "monthly", priority: "0.6" },
     { url: "/booking", changefreq: "monthly", priority: "0.7" },
+    { url: "/booking-form", changefreq: "weekly", priority: "0.7" },
+    { url: "/pay-online", changefreq: "weekly", priority: "0.8" },
+    { url: "/remind-me-later", changefreq: "monthly", priority: "0.7" },
     { url: "/contact-us", changefreq: "monthly", priority: "0.6" },
     { url: "/sponsor-booking", changefreq: "monthly", priority: "0.6" },
     { url: "/privacy-policy", changefreq: "yearly", priority: "0.3" },
+    { url: "/cookie-policy", changefreq: "yearly", priority: "0.3" },
     { url: "/terms-and-conditions", changefreq: "yearly", priority: "0.3" },
 ];
 
@@ -87,6 +91,22 @@ async function fetchNewsSlugs() {
         changefreq: "weekly",
         priority: "0.6",
     }));
+}
+
+async function fetchNewsPaginationSlugs() {
+    const NEWS_PER_PAGE = 6;
+    const d = await get("generalnews");
+    const list = d?.status ? d.generalNews : [];
+    const totalPages = Math.ceil(list.length / NEWS_PER_PAGE);
+    const slugs = [];
+    for (let page = 2; page <= totalPages; page++) {
+        slugs.push({
+            url: `/news?page=${page}`,
+            changefreq: "daily",
+            priority: "0.5",
+        });
+    }
+    return slugs;
 }
 
 async function fetchTrendSlugs() {
@@ -119,7 +139,7 @@ async function fetchNavbarNavigationSlugs() {
         .map((s) => ({
             url: `/venue`,
             changefreq: "monthly",
-            priority: "0.5",
+            priority: "0.8",
         }));
 }
 
@@ -152,10 +172,11 @@ ${urlEntries}
 /* -------- main -------- */
 async function generateSitemap() {
 
-    const [speakerSlugs, newsSlugs, trendSlugs, sponsorSlugs, navbarSlugs] =
+    const [speakerSlugs, newsSlugs, newsPaginationSlugs, trendSlugs, sponsorSlugs, navbarSlugs] =
         await Promise.all([
             fetchSpeakerSlugs(),
             fetchNewsSlugs(),
+            fetchNewsPaginationSlugs(),
             fetchTrendSlugs(),
             fetchSponsorSlugs(),
             fetchNavbarNavigationSlugs(),
@@ -165,6 +186,7 @@ async function generateSitemap() {
         ...STATIC_ROUTES,
         ...speakerSlugs,
         ...newsSlugs,
+        ...newsPaginationSlugs,
         ...trendSlugs,
         ...sponsorSlugs,
         ...navbarSlugs,
