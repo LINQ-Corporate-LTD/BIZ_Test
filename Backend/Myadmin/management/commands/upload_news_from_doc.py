@@ -132,7 +132,14 @@ def parse_news_articles(html: str) -> list:
         lower = cleaned.lower()
 
         if lower.startswith("publishing date:"):
-            current["date"] = cleaned.split(":", 1)[1].strip()
+            date_val = cleaned.split(":", 1)[1].strip()
+            # If current is empty (right after a separator) AND the last saved
+            # article has no date, the date was placed after its own separator —
+            # assign it retroactively to that article
+            if not current and articles and not articles[-1].get("date"):
+                articles[-1]["date"] = date_val
+            else:
+                current["date"] = date_val
             in_full = False
         elif lower.startswith("category:"):
             current["category"] = cleaned.split(":", 1)[1].strip()
