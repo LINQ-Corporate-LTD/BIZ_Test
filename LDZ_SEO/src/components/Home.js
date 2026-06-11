@@ -334,11 +334,11 @@ const Home = () => {
             position: "absolute",
           }}
         >
-          <a href="/">Lithium &amp; Downstream Summit 2026</a>
-          <a href="/">Lithium Downstream trends</a>
+          <a href="/">EV Charging &amp; Australia 2026</a>
+          <a href="/">EV Charging trends</a>
           <a href="/">market evolution insights</a>
           <a href="/">crypto innovation analysis</a>
-          <a href="/">Litihium Downstream Summit 2026</a>
+          <a href="/">EV Charging Australia 2026</a>
         </div>
         <RelatedEventsSection />
       </article>
